@@ -1,14 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const Button = ({title, onPress}: {title: string, onPress: () => void}) => {
+const Button = ({ title, onPress }: { title: string; onPress: () => void }) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;
 
 const styles = StyleSheet.create({
   container: {
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
-})
+});
