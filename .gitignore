@@ -24,6 +24,8 @@ DerivedData
 
 # Android/IntelliJ
 #
+
+gitHub_push.sh
 build/
 .idea
 .gradle
