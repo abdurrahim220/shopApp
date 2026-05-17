@@ -6,9 +6,10 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
+import { Product } from '../../features/product/productType';
 
 interface Props {
-  item: any;
+  item: Product;
 }
 
 const ProductCard: React.FC<Props> = ({item}) => {
