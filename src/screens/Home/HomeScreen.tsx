@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 
 // import Header from '../../components/home/Header';
@@ -16,10 +17,10 @@ import { AppDispatch, RootState } from '../../app/store';
 import { getHomeProducts } from '../../features/product/productThunk';
 import Header from '../../components/home/header';
 import HeroBanner from '../../components/home/HeroBanner';
-
+import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
-
+  const navigation = useNavigation<any>();
   const { homeProducts, loading, error } = useSelector(
     (state: RootState) => state.product,
   );
@@ -44,7 +45,13 @@ const HomeScreen = () => {
       <HeroBanner />
 
       <View style={styles.content}>
-        <Text style={styles.sectionTitle}>Featured Products</Text>
+        <View style={styles.rowBetween}>
+          <Text style={styles.sectionTitle}>Featured Products</Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate('ShopTab')}>
+            <Text style={styles.viewAllText}>View All</Text>
+          </TouchableOpacity>
+        </View>
 
         {error && <Text style={styles.errorText}>{error}</Text>}
 
@@ -97,5 +104,16 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginBottom: 20,
+  },
+  rowBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+
+  viewAllText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

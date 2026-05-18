@@ -17,7 +17,9 @@ export const getHomeProducts = createAsyncThunk(
 
 export const getViewAllProducts = createAsyncThunk(
   'products/getViewAllProducts',
-  async ({ page, limit }: { page: number; limit: number }, thunkAPI) => {
+  async (params: { page?: number; limit?: number } = {}, thunkAPI) => {
+    const page = params.page ?? 1;
+    const limit = params.limit ?? 10;
     try {
       const response = await fetchViewAllProductsApi(page, limit);
       return response.data; // returns { items, meta }
