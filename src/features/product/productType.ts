@@ -9,8 +9,17 @@ export interface Product {
   quantity: number;
 }
 
+export interface PaginationMeta {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
 export interface ProductState {
-  products: Product[];
+  products: Product[]; // for view all/paginated list
+  homeProducts: Product[]; // specifically for home screen (6 products)
+  meta: PaginationMeta | null; // pagination details
   loading: boolean;
   error: string | null;
 }

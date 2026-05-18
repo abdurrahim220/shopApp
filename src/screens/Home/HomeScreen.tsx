@@ -6,6 +6,7 @@ import {
   FlatList,
   StyleSheet,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 
 // import Header from '../../components/home/Header';
@@ -13,21 +14,21 @@ import ProductCard from '../../components/home/ProductCard';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../app/store';
-import { getProducts } from '../../features/product/productThunk';
+import { getHomeProducts } from '../../features/product/productThunk';
 import Header from '../../components/home/header';
 import HeroBanner from '../../components/home/HeroBanner';
-
+import { useNavigation } from '@react-navigation/native';
 const HomeScreen = () => {
   const dispatch = useDispatch<AppDispatch>();
-
-  const { products, loading, error } = useSelector(
+  const navigation = useNavigation<any>();
+  const { homeProducts, loading, error } = useSelector(
     (state: RootState) => state.product,
   );
 
-  console.log('products', products);
+  // console.log('homeProducts', homeProducts);
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getHomeProducts());
   }, [dispatch]);
 
   if (loading) {
@@ -44,13 +45,23 @@ const HomeScreen = () => {
       <HeroBanner />
 
       <View style={styles.content}>
-        <Text style={styles.sectionTitle}>Featured Products</Text>
+        <View style={styles.rowBetween}>
+          <Text style={styles.sectionTitle}>Featured Products</Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate('ShopTab')}>
+            <Text style={styles.viewAllText}>View All</Text>
+          </TouchableOpacity>
+        </View>
 
         {error && <Text style={styles.errorText}>{error}</Text>}
 
         <FlatList
-          data={products}
+          data={homeProducts}
           keyExtractor={item => item._id}
+          initialNumToRender={6}
+          maxToRenderPerBatch={6}
+          windowSize={6}
+          removeClippedSubviews={true}
           numColumns={2}
           columnWrapperStyle={styles.flatListContent}
           renderItem={({ item }) => <ProductCard item={item} />}
@@ -93,5 +104,16 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
     marginBottom: 20,
+  },
+  rowBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+
+  viewAllText: {
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

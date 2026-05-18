@@ -1,31 +1,28 @@
 import React from 'react';
 
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Product } from '../../features/product/productType';
 
 interface Props {
-  item: any;
+  item: Product;
 }
+import { useNavigation } from '@react-navigation/native';
 
-const ProductCard: React.FC<Props> = ({item}) => {
+const ProductCard: React.FC<Props> = ({ item }) => {
+  const navigation = useNavigation<any>();
   return (
     <View style={styles.card}>
-      <Image
-        source={{uri: item.image}}
-        style={styles.image}
-      />
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ProductDetails', { product: item })}
+      >
+        <Image source={{ uri: item.image }} style={styles.image} />
 
-      <Text numberOfLines={2} style={styles.title}>
-        {item.title}
-      </Text>
+        <Text numberOfLines={2} style={styles.title}>
+          {item.title}
+        </Text>
 
-      <Text style={styles.price}>
-        ৳ {item.price}
-      </Text>
+        <Text style={styles.price}>৳ {item.price}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
