@@ -35,7 +35,7 @@ const RootNavigator: React.FC = () => {
         name="ProductDetails"
         component={ProductDetailsScreen}
         options={{
-          title: 'Product Details',
+          headerShown: false,
         }}
       />
     </Stack.Navigator>
